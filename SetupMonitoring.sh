@@ -92,7 +92,7 @@ else
         --restart unless-stopped \
         -d \
         -p 0.0.0.0:9221:9221 \
-        -v "${PVE_CONFIG}:/etc/prometheus/pve.yml:ro" \
+        -v "${PVE_CONFIG}:/etc/prometheus/pve.yml" \
         prompve/prometheus-pve-exporter
 fi
 
@@ -114,7 +114,7 @@ else
         --restart unless-stopped \
         -p 9090:9090 \
         -d \
-        -v "${PROMETHEUS_CONFIG}:/etc/prometheus/prometheus.yml:ro" \
+        -v "${PROMETHEUS_CONFIG}:/etc/prometheus/prometheus.yml" \
         -v prometheus-data:/prometheus \
         prom/prometheus
 fi
