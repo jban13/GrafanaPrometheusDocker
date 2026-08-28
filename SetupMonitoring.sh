@@ -65,9 +65,8 @@ copy_and_edit() {
         log "Konfiguration liegt bereits am Ziel: $target_file"
     fi
 
-    sed -i
-        "s/DOCKER_HOST_IP/${HOST_IP}/g"
-        "$target_file"
+    grep -q "DOCKER_HOST_IP" "$target_file" &&
+    sed -i "s|DOCKER_HOST_IP|${HOST_IP}|g" "$target_file"
         
     log "Oeffne $target_file zur Bearbeitung"
     "${EDITOR_CMD[@]}" "$target_file"
