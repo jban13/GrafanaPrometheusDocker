@@ -28,22 +28,18 @@ Docker und `curl` werden bei Bedarf durch das Skript installiert.
 
 ## Proxmox-Benutzer vorbereiten
 
-Vor der Installation muss in Proxmox VE ein Benutzer oder API-Token fuer das Monitoring eingerichtet werden.
+Vor der Installation muss in Proxmox VE ein Benutzer oder API-Token fuer das Monitoring eingerichtet werden. Hier wird ein Benutzer verwendet.
 
 Der verwendete Zugang sollte nur die fuer das Auslesen der Monitoring-Daten notwendigen Rechte erhalten. Anschliessend werden die Zugangsdaten in der kopierten `pve.yml` eingetragen.
-
-> **Sicherheitshinweis:** Keine echten Benutzernamen, Passwoerter oder API-Token in das GitHub-Repository einchecken. Die Datei `pve/pve.yml` im Repository sollte ausschliesslich Platzhalter enthalten.
 
 ## Installation
 
 ### 1. Repository klonen
 
 ```bash
-git clone <URL-DES-REPOSITORIES>
+git clone https://github.com/jban13/GrafanaPrometheusDocker
 cd PrometheusGrafanaMonitoring
 ```
-
-Ersetze `<URL-DES-REPOSITORIES>` durch die Clone-URL deines GitHub-Repositories.
 
 ### 2. Installationsskript ausfuehrbar machen
 
