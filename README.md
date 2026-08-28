@@ -38,22 +38,27 @@ Der verwendete Zugang sollte nur die fuer das Auslesen der Monitoring-Daten notw
 
 ## Installation
 
-### 1. Git installieren und Repository klonen
+### 1. Git installieren
 
 ```bash
 apt-get update
 apt-get install git-all
+```
+
+### 2. Repository klonen
+
+```bash
 git clone https://github.com/jban13/PVE-GrafanaDocker
 cd PVE-GrafanaDocker
 ```
 
-### 2. Installationsskript ausfuehrbar machen
+### 3. Installationsskript ausfuehrbar machen
 
 ```bash
 chmod +x SetupMonitoring.sh
 ```
 
-### 3. Installationsskript starten
+### 4. Installationsskript starten
 
 ```bash
 ./SetupMonitoring.sh
