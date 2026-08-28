@@ -10,9 +10,9 @@ Die Konfigurationsdateien bleiben zur besseren Uebersicht in eigenen Verzeichnis
 PVE-GrafanaDocker/
 |-- SetupMonitoring.sh
 |-- pve/
-|   `-- pve.yml
-`-- prometheus/
-    `-- prometheus.yml
+|   -- pve.yml
+|-- prometheus/
+    -- prometheus.yml
 ```
 
 ## Voraussetzungen
