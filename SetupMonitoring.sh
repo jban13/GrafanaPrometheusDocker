@@ -49,6 +49,12 @@ copy_and_edit() {
     local target_dir
     target_dir="$(dirname -- "$target_file")"
 
+    HOST_IP=$(ip route get 1.1.1.1 | awk '{print $7; exit}')
+
+    sed -i
+        "s/DOCKER_HOST_IP/${HOST_IP}/g"
+        "$PROMETHEUS_CONFIG"
+    
     [[ -f "$source_file" ]] || fail "Quelldatei fehlt: $source_file"
     mkdir -p -- "$target_dir"
 
