@@ -2,7 +2,7 @@ scrape_configs:
   - job_name: 'pve'
     static_configs:
       - targets:
-        - 192.168.178.2  # Proxmox VE node.
+        - 192.168.1.1  # Proxmox VE node.
     metrics_path: /pve
     params:
       module: [default]
@@ -14,4 +14,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 192.168.178.104:9221  # PVE exporter IP address and port number - use docker host IP, not localhost
+        replacement: DOCKER_HOST_IP:9221  # PVE exporter IP address and port number - use docker host IP, not localhost
