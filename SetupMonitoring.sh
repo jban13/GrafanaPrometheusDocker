@@ -68,26 +68,26 @@ copy_and_edit() {
 }
 
 container_exists() {
-    sudo docker container inspect "$1" >/dev/null 2>&1
+    docker container inspect "$1" >/dev/null 2>&1
 }
 
 select_editor
 
 log "Paketlisten aktualisieren und Docker installieren"
-sudo apt-get update
-sudo apt-get install -y docker.io curl
-sudo systemctl enable --now docker
+apt-get update
+apt-get install -y docker.io curl
+systemctl enable --now docker
 
 # pve.yml vor dem docker pull kopieren und bearbeiten.
 copy_and_edit "$PVE_SOURCE" "$PVE_CONFIG"
 
 log "Prometheus-PVE-Exporter installieren"
-sudo docker pull prompve/prometheus-pve-exporter
+docker pull prompve/prometheus-pve-exporter
 
 if container_exists prometheus-pve-exporter; then
     log "Container prometheus-pve-exporter existiert bereits und wird beibehalten."
 else
-    sudo docker run --init \
+    docker run --init \
         --name prometheus-pve-exporter \
         --restart unless-stopped \
         -d \
@@ -96,20 +96,20 @@ else
         prompve/prometheus-pve-exporter
 fi
 
-sudo docker ps
+docker ps
 curl --fail --show-error http://localhost:9221/ || true
 
 # prometheus.yml direkt vor der Prometheus-Installation kopieren und bearbeiten.
 copy_and_edit "$PROMETHEUS_SOURCE" "$PROMETHEUS_CONFIG"
 
 log "Prometheus installieren"
-sudo docker volume create prometheus-data >/dev/null
-sudo docker pull prom/prometheus
+docker volume create prometheus-data >/dev/null
+docker pull prom/prometheus
 
 if container_exists prometheus; then
     log "Container prometheus existiert bereits und wird beibehalten."
 else
-    sudo docker run \
+    docker run \
         --name prometheus \
         --restart unless-stopped \
         -p 9090:9090 \
@@ -120,13 +120,13 @@ else
 fi
 
 log "Grafana installieren"
-sudo docker volume create grafana-storage >/dev/null
-sudo docker pull grafana/grafana-enterprise
+docker volume create grafana-storage >/dev/null
+docker pull grafana/grafana-enterprise
 
 if container_exists grafana; then
     log "Container grafana existiert bereits und wird beibehalten."
 else
-    sudo docker run \
+    docker run \
         --name grafana \
         --restart unless-stopped \
         -d \
@@ -136,7 +136,7 @@ else
 fi
 
 log "Installation abgeschlossen"
-sudo docker ps --filter name=prometheus-pve-exporter \
+docker ps --filter name=prometheus-pve-exporter \
                --filter name=prometheus \
                --filter name=grafana
 
