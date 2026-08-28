@@ -8,7 +8,7 @@ Die Konfigurationsdateien bleiben zur besseren Uebersicht in eigenen Verzeichnis
 
 ```text
 PrometheusGrafanaMonitoring/
-|-- SetupPrometheusGrafanaMonitoring.sh
+|-- SetupMonitoring.sh
 |-- pve/
 |   `-- pve.yml
 `-- prometheus/
@@ -44,13 +44,13 @@ cd PrometheusGrafanaMonitoring
 ### 2. Installationsskript ausfuehrbar machen
 
 ```bash
-chmod +x SetupPrometheusGrafanaMonitoring.sh
+chmod +x SetupMonitoring.sh
 ```
 
 ### 3. Installationsskript starten
 
 ```bash
-./SetupPrometheusGrafanaMonitoring.sh
+./SetupMonitoring.sh
 ```
 
 Das Skript fuehrt die folgenden Schritte in dieser Reihenfolge aus.
@@ -209,13 +209,13 @@ Das Skript verwendet den Editor in dieser Reihenfolge:
 Das Skript kann beispielsweise ausdruecklich mit `nano` gestartet werden:
 
 ```bash
-EDITOR=nano ./SetupPrometheusGrafanaMonitoring.sh
+EDITOR=nano ./SetupMonitoring.sh
 ```
 
 Oder mit `vim`:
 
 ```bash
-EDITOR=vim ./SetupPrometheusGrafanaMonitoring.sh
+EDITOR=vim ./SetupMonitoring.sh
 ```
 
 Das Installationsskript wartet jeweils, bis der Editor geschlossen wurde. Erst danach wird der naechste Schritt ausgefuehrt.
@@ -234,7 +234,7 @@ Ueber die Umgebungsvariable `TARGET_ROOT` kann ein anderes Stammverzeichnis verw
 ```bash
 sudo mkdir -p /opt/monitoring
 sudo chown "$USER:$USER" /opt/monitoring
-TARGET_ROOT=/opt/monitoring ./SetupPrometheusGrafanaMonitoring.sh
+TARGET_ROOT=/opt/monitoring ./SetupMonitoring.sh
 ```
 
 Die Dateien werden dann hier abgelegt:
