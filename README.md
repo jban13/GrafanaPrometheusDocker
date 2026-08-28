@@ -7,7 +7,7 @@ Die Konfigurationsdateien bleiben zur besseren Uebersicht in eigenen Verzeichnis
 ## Repository-Struktur
 
 ```text
-PrometheusGrafanaMonitoring/
+PVE-GrafanaDocker/
 |-- SetupMonitoring.sh
 |-- pve/
 |   `-- pve.yml
@@ -37,8 +37,8 @@ Der verwendete Zugang sollte nur die fuer das Auslesen der Monitoring-Daten notw
 ### 1. Repository klonen
 
 ```bash
-git clone https://github.com/jban13/GrafanaPrometheusDocker
-cd PrometheusGrafanaMonitoring
+git clone https://github.com/jban13/PVE-GrafanaDocker
+cd PVE-GrafanaDocker
 ```
 
 ### 2. Installationsskript ausfuehrbar machen
