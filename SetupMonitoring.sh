@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 # Repository structure:
-#   SetupPrometheusGrafanaMonitoring.sh
+#   SetupMonitoring.sh
 #   pve/pve.yml
 #   prometheus/prometheus.yml
 #
