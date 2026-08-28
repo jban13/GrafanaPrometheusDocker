@@ -38,9 +38,11 @@ Der verwendete Zugang sollte nur die fuer das Auslesen der Monitoring-Daten notw
 
 ## Installation
 
-### 1. Repository klonen
+### 1. Git installieren und Repository klonen
 
 ```bash
+apt-get update
+apt-get install git-all
 git clone https://github.com/jban13/PVE-GrafanaDocker
 cd PVE-GrafanaDocker
 ```
