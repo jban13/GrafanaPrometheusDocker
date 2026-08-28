@@ -8,11 +8,15 @@ Die Konfigurationsdateien bleiben zur besseren Uebersicht in eigenen Verzeichnis
 
 ```text
 PVE-GrafanaDocker/
-├── SetupMonitoring.sh
+├── prometheus/
+│   └── prometheus.yml
 ├── pve/
 │   └── pve.yml
-└── prometheus/
-    └── prometheus.yml
+├── .gitattributes
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+└── SetupMonitoring.sh
 ```
 
 ## Voraussetzungen
