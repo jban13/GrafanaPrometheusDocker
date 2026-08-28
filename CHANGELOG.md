@@ -3,6 +3,7 @@
 ## Unreleased
 
 ### Geplant
+- Erster Funktionstest
 - Optionaler Einsatz eines Proxmox-API-Tokens
 - Automatische Prüfung der YAML-Konfigurationen
 - Prüfung, ob die benötigten Ports bereits belegt sind
