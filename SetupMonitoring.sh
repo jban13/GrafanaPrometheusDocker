@@ -302,6 +302,14 @@ create_loki_container() {
 
     docker volume create "$LOKI_VOLUME" >/dev/null
 
+    log "Berechtigungen des Loki-Volumes fuer UID 10001 vorbereiten"
+ 
+    docker run \
+    --rm \
+    -v "${LOKI_VOLUME}:/tmp/loki" \
+    alpine:3.22 \
+    chown -R 10001:10001 /tmp/loki
+
     log "Loki ${LOKI_VERSION} installieren"
 
     docker run \
