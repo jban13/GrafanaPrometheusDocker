@@ -303,7 +303,7 @@ create_loki_container() {
     docker volume create "$LOKI_VOLUME" >/dev/null
 
     log "Berechtigungen des Loki-Volumes fuer UID 10001 vorbereiten"
- 
+    
     docker run \
     --rm \
     -v "${LOKI_VOLUME}:/tmp/loki" \
