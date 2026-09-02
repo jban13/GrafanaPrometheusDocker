@@ -16,6 +16,7 @@ set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_ROOT="${TARGET_ROOT:-$HOME}"
+HOST_IP=""
 
 PVE_SOURCE="${SCRIPT_DIR}/pve/pve.yml"
 PVE_DIR="${TARGET_ROOT}/pve"
@@ -41,6 +42,22 @@ fail() {
     exit 1
 }
 
+detect_host_ip() {
+    HOST_IP="$(
+        ip -4 route get 1.1.1.1 2>/dev/null |
+            awk '{for (i = 1; i <= NF; i++) if ($i == "src") {print $(i+1); exit}}'
+    )"
+
+    if [[ -z "$HOST_IP" ]]; then
+        HOST_IP="$(hostname -I | awk '{print $1}')"
+    fi
+
+    [[ -n "$HOST_IP" ]] ||
+        fail "Die IPv4-Adresse dieses LXC konnte nicht ermittelt werden."
+
+    log "Ermittelte LXC-Adresse: ${HOST_IP}"
+}
+
 select_editor() {
     if [[ -n "${EDITOR:-}" ]]; then
         read -r -a EDITOR_CMD <<< "$EDITOR"
@@ -57,10 +74,8 @@ copy_and_edit() {
     local source_file="$1"
     local target_file="$2"
     local target_dir
-    local host_ip
 
     target_dir="$(dirname -- "$target_file")"
-    host_ip="$(ip route get 1.1.1.1 | awk '{print $7; exit}')"
 
     [[ -f "$source_file" ]] ||
         fail "Quelldatei fehlt: $source_file"
@@ -82,7 +97,7 @@ copy_and_edit() {
     fi
 
     if grep -q "DOCKER_HOST_IP" "$target_file"; then
-        sed -i "s|DOCKER_HOST_IP|${host_ip}|g" "$target_file"
+        sed -i "s|DOCKER_HOST_IP|${HOST_IP}|g" "$target_file"
     fi
 
     log "Oeffne $target_file zur Bearbeitung"
@@ -360,6 +375,7 @@ install_loki() {
 }
 
 select_editor
+detect_host_ip
 
 log "Paketlisten aktualisieren und Docker installieren"
 
@@ -447,16 +463,24 @@ docker ps \
     --filter name=grafana \
     --filter name=loki
 
-printf '\nPVE-Exporter: http://localhost:9221\n'
-printf 'Prometheus:   http://localhost:9090\n'
-printf 'Grafana:      http://localhost:3000\n'
+printf '\n'
+printf 'PVE-Exporter: http://%s:9221\n' "$HOST_IP"
+printf 'Prometheus:   http://%s:9090\n' "$HOST_IP"
+printf 'Grafana:      http://%s:3000\n' "$HOST_IP"
 
 if container_exists loki; then
-    printf 'Loki:         http://localhost:%s\n' "$LOKI_PORT"
-    printf 'Loki Ready:   http://localhost:%s/ready\n' "$LOKI_PORT"
+    printf 'Loki:         http://%s:%s\n' \
+        "$HOST_IP" \
+        "$LOKI_PORT"
+
+    printf 'Loki Ready:   http://%s:%s/ready\n' \
+        "$HOST_IP" \
+        "$LOKI_PORT"
+
     printf '\n'
     printf 'Alloy-Zieladresse fuer einen anderen LXC:\n'
-    printf \
-        'http://<IP-DIESES-LXC>:%s/loki/api/v1/push\n' \
+
+    printf 'http://%s:%s/loki/api/v1/push\n' \
+        "$HOST_IP" \
         "$LOKI_PORT"
 fi
